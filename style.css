@@ -320,11 +320,11 @@ footer{margin-top:10px;color:var(--muted)}
 .modal{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;z-index:1200}
 .modal[aria-hidden="false"]{display:flex}
 .modal-backdrop{position:absolute;inset:0;background:rgba(2,6,23,0.6);backdrop-filter:blur(4px)}
-.modal-content{position:relative;margin:32px auto;max-width:420px;width:92%;background:#a51d1d;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.modal-content{position:relative;margin:32px auto;max-width:420px;width:92%;background:#fffdf4;border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.06);box-shadow:0 10px 30px rgba(0,0,0,0.6)}
 .modal-header{display:flex;align-items:center;justify-content:space-between;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,0.03);margin-bottom:8px}
-.modal-header h3{margin:0;color:#fffdf4;font-size:14px}
+.modal-header h3{margin:0;color:#a51d1d;font-size:14px}
 .modal-actions{display:flex;gap:8px;align-items:center}
-.modal-actions button{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:6px 8px;border-radius:8px;cursor:pointer}
+.modal-actions button{background:transparent;border:1px solid rgba(255,255,255,0.04);color:#a51d1d;padding:6px 8px;border-radius:8px;cursor:pointer}
 .modal-actions button:hover{opacity:0.9}
 .modal-body{max-height:56vh;overflow:auto;padding:6px}
 .modal-body ul{list-style:none;padding:0;margin:0}
@@ -335,11 +335,12 @@ footer{margin-top:10px;color:var(--muted)}
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+  background: #a51d1d;
 }
 .history-table thead {
   position: sticky;
   top: 0;
-  background: #0b1216;
+  
   z-index: 10;
 }
 .history-table th {

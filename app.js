@@ -1,7 +1,7 @@
 const LS_KEY = 'truco_anotador_v1'
 
 const defaultState = () => ({
-  teams: [ { name: 'Nosotros', score: 0 }, { name: 'Ellos', score: 0 } ],
+  teams: [ { name: 'NOSOTROS', score: 0 }, { name: 'ELLOS', score: 0 } ],
   history: [],
   target: 30
 })
@@ -30,7 +30,7 @@ function saveState(){
 function render(){
   state.teams.forEach((t,i)=>{
     scoreEls[i].textContent = t.score
-    nameInputs[i].value = t.name
+    nameInputs[i].value = t.name.toUpperCase()
   })
   if(targetInput) targetInput.value = state.target
   renderHistory()
@@ -101,7 +101,7 @@ function renderHistory(){
   historyReversed.forEach(h=>{
     const tr = document.createElement('tr')
     const t = new Date(h.time).toLocaleTimeString()
-    const teamName = state.teams[h.team]?.name || `Equipo ${h.team+1}`
+    const teamName = state.teams[h.team]?.name.toUpperCase() || `Equipo ${h.team+1}`
     const ptsText = h.pts > 0 ? `+${h.pts}` : `${h.pts}`
     
     // Actualizar total del equipo correspondiente
@@ -131,10 +131,10 @@ function renderHistory(){
     if(h.pts > 0) tdAction.classList.add('hist-sum')
     else tdAction.classList.add('hist-rest')
     
-    tr.appendChild(tdTime)
-    tr.appendChild(tdTeam0)
-    tr.appendChild(tdTeam1)
     tr.appendChild(tdAction)
+    tr.appendChild(tdTime)
+    tr.appendChild(tdTeam1)
+    tr.appendChild(tdTeam0)
     tbody.appendChild(tr)
   })
 }
