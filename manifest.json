@@ -1,0 +1,24 @@
+{
+  "name": "Anotador de Truco - Laundry Garage",
+  "short_name": "Truco Laundry Garage",
+  "description": "Anotador de Truco con papas fritas",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#A51d1d",
+  "theme_color": "#A51d1d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/logo_garage.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/logo_garage.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

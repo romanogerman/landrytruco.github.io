@@ -94,6 +94,19 @@
 
 *{box-sizing:border-box}
 
+/* Prevenir zoom en móviles */
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+body, input, button {
+  touch-action: manipulation;
+}
+
 body{
   font-family:Outfit, sans-serif;;
   background:#a51d1d;
@@ -144,9 +157,9 @@ header{flex-direction:column;align-items:center;gap:10px;margin-bottom:5px;posit
 /* Header layout for menu toggle and logo */
 .header-left{display:flex;flex-direction:column}
 .header-right{display:flex;flex-direction:row;align-items:center;gap:10px}
-.logo{width:173px;height:65px;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto;}
+.logo{width:199px;height:75px;border-radius:12px;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto;}
 .logo img{width:100%;height:100%;object-fit:contain;display:block}
-.menu-toggle{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:8px 10px;border-radius:8px;cursor:pointer}
+.menu-toggle{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);padding:9px 12px;border-radius:8px;cursor:pointer;font-size:20px;}
 
 /* Side menu */
 .side-menu{position:fixed;inset:0;display:none;z-index:1300}
@@ -163,7 +176,17 @@ header{flex-direction:column;align-items:center;gap:10px;margin-bottom:5px;posit
 .team-name{font-size:18px;padding:8px 10px;border-radius:8px;border:1px solid #FFFFFF;background:transparent;color:inherit;width:100%;text-align:center;margin-bottom:10px}
 .score{font-size:64px;font-weight:700;margin:8px 0}
 .controls{display:flex;gap:10px}
-
+/* Botones de controles (mismo tamaño en escritorio y móvil) */
+.controls button{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  padding:0;
+  font-size:40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
 /* New team body groups title, score, tally and controls vertically */
 .team-body{display:flex;flex-direction:column;align-items:center;width:100%}
 .team .score{order:0}
@@ -306,6 +329,59 @@ footer{margin-top:10px;color:var(--muted)}
 .modal-body{max-height:56vh;overflow:auto;padding:6px}
 .modal-body ul{list-style:none;padding:0;margin:0}
 .modal-body li{display:flex;align-items:center;gap:8px;padding:8px;border-bottom:1px solid rgba(255,255,255,0.02);font-size:13px}
+
+/* Tabla del historial */
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.history-table thead {
+  position: sticky;
+  top: 0;
+  background: #0b1216;
+  z-index: 10;
+}
+.history-table th {
+  padding: 10px 8px;
+  text-align: left;
+  color: #f6e9d2;
+  font-weight: 700;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+  font-size: 12px;
+}
+.history-table td {
+  padding: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+}
+.history-table tbody tr:hover {
+  background: rgba(255,255,255,0.03);
+}
+.hist-time {
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.hist-score {
+  text-align: center;
+  font-weight: 700;
+  color: #dbeef1;
+  font-size: 14px;
+}
+.hist-score.hist-active {
+  color: #ff6a00;
+  background: rgba(255,106,0,0.1);
+}
+.hist-action {
+  color: #9fa8b3;
+  font-size: 12px;
+}
+.hist-action.hist-sum {
+  color: #9fe6a5;
+}
+.hist-action.hist-rest {
+  color: #ff9987;
+}
 .hist-label{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
 .hist-sum{color:#9fe6a5}
 .hist-rest{color:#ff9987}

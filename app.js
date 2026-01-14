@@ -77,19 +77,65 @@ function reset(){
 }
 
 function renderHistory(){
-  historyList.innerHTML = ''
-  state.history.forEach(h=>{
-    const li = document.createElement('li')
+  // Actualizar headers de la tabla con nombres de equipos
+  const header0 = document.getElementById('team-header-0')
+  const header1 = document.getElementById('team-header-1')
+  if(header0) header0.textContent = state.teams[0]?.name || 'Equipo 1'
+  if(header1) header1.textContent = state.teams[1]?.name || 'Equipo 2'
+  
+  // Obtener tbody
+  const tbody = historyList.querySelector('tbody')
+  if(!tbody) {
+    historyList.innerHTML = ''
+    return
+  }
+  
+  tbody.innerHTML = ''
+  
+  // Construir historial con totales acumulados
+  let totals = [0, 0] // Totales acumulados para cada equipo
+  
+  // Recorrer historial en orden inverso (del más antiguo al más reciente)
+  const historyReversed = [...state.history].reverse()
+  
+  historyReversed.forEach(h=>{
+    const tr = document.createElement('tr')
     const t = new Date(h.time).toLocaleTimeString()
     const teamName = state.teams[h.team]?.name || `Equipo ${h.team+1}`
-    const ptsText = h.pts>0 ? `+${h.pts}` : `${h.pts}`
-    // if history entry has no stored total (older entries), compute total at that point
-    let total = (h.total !== undefined && h.total !== null) ? h.total : null
-    if(total === null){
-      total = computeTotalAtHistoryEntry(h)
-    }
-    li.textContent = `${t} — ${teamName}: ${ptsText} (total ${total})`
-    historyList.appendChild(li)
+    const ptsText = h.pts > 0 ? `+${h.pts}` : `${h.pts}`
+    
+    // Actualizar total del equipo correspondiente
+    totals[h.team] += h.pts
+    
+    // Columna hora
+    const tdTime = document.createElement('td')
+    tdTime.textContent = t
+    tdTime.className = 'hist-time'
+    
+    // Columna equipo 0
+    const tdTeam0 = document.createElement('td')
+    tdTeam0.textContent = totals[0]
+    tdTeam0.className = 'hist-score'
+    if(h.team === 0) tdTeam0.classList.add('hist-active')
+    
+    // Columna equipo 1
+    const tdTeam1 = document.createElement('td')
+    tdTeam1.textContent = totals[1]
+    tdTeam1.className = 'hist-score'
+    if(h.team === 1) tdTeam1.classList.add('hist-active')
+    
+    // Columna acción
+    const tdAction = document.createElement('td')
+    tdAction.textContent = `${teamName} ${ptsText}`
+    tdAction.className = 'hist-action'
+    if(h.pts > 0) tdAction.classList.add('hist-sum')
+    else tdAction.classList.add('hist-rest')
+    
+    tr.appendChild(tdTime)
+    tr.appendChild(tdTeam0)
+    tr.appendChild(tdTeam1)
+    tr.appendChild(tdAction)
+    tbody.appendChild(tr)
   })
 }
 
@@ -225,7 +271,7 @@ const closeHistoryBtn = document.getElementById('close-history')
 
 function openHistory(){
   modal.setAttribute('aria-hidden','false')
-  renderModalHistory()
+  renderHistory() // Usar la misma función que actualiza la tabla
 }
 function closeHistory(){
   modal.setAttribute('aria-hidden','true')
@@ -236,34 +282,6 @@ if(closeHistoryBtn) closeHistoryBtn.addEventListener('click', closeHistory)
 if(modal){
   const bd = modal.querySelector('.modal-backdrop')
   if(bd) bd.addEventListener('click', closeHistory)
-}
-
-function renderModalHistory(){
-  modalList.innerHTML = ''
-  state.history.forEach((h, idx)=>{
-    const li = document.createElement('li')
-    const label = document.createElement('div')
-    label.className = 'hist-label'
-    label.textContent = h.pts>0?'+':(h.pts<0?'-':'N')
-    label.classList.add(h.pts>0? 'hist-sum':'hist-rest')
-
-    const txt = document.createElement('div')
-    const teamName = state.teams[h.team]?.name || `Equipo ${h.team+1}`
-    let total = (h.total !== undefined && h.total !== null) ? h.total : null
-    if(total === null){
-      total = computeTotalAtHistoryEntry(h)
-    }
-    txt.innerHTML = `<strong>${h.pts>0? 'SUMA':'RESTA'}</strong> ${h.pts>0? '+'+h.pts: h.pts} (<em>${teamName}</em>) <span class="hist-total">total ${total}</span>`
-
-    const meta = document.createElement('div')
-    meta.className = 'hist-meta'
-    meta.textContent = new Date(h.time).toLocaleTimeString()
-
-    li.appendChild(label)
-    li.appendChild(txt)
-    li.appendChild(meta)
-    modalList.appendChild(li)
-  })
 }
 
 // Compute the total score that the team had at the moment of this history entry.
